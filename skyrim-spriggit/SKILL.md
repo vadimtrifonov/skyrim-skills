@@ -1,6 +1,6 @@
 ---
 name: skyrim-spriggit
-description: Serialize and deserialize Skyrim plugins (ESP/ESL/ESM) with Spriggit JSON. Use to convert plugins to editable text trees or rebuild plugins.
+description: Serialize Skyrim plugins (ESP/ESL/ESM) to editable Spriggit JSON trees, rebuild plugins from those trees, or list all major records in a tree as normalized JSONL.
 ---
 
 # Skyrim Spriggit
@@ -11,10 +11,8 @@ Use this skill directory as the working directory.
 
 ```bash
 mise trust mise.toml
-mise install http:spriggit-cli
+mise install
 ```
-
-Run commands through `mise exec --`.
 
 ## Serialize
 
@@ -23,6 +21,24 @@ Use a clean, dedicated output directory; `<ModName>.spriggit` is the preferred n
 ```bash
 mise exec -- Spriggit.CLI.exe serialize --InputPath "<plugin.esp>" --OutputPath "<ModName>.spriggit" --GameRelease <SkyrimSE|SkyrimVR> --PackageName Spriggit.Json --PackageVersion <version>
 ```
+
+## List records
+
+```bash
+mise exec -- python scripts/list_records.py "<ModName>.spriggit" > "<ModName>.records.jsonl"
+```
+
+The output includes records embedded in cells and worldspaces, such as placed references, landscapes, and navigation meshes.
+
+Each line contains these fields:
+
+- `type`
+- `formKey`
+- `editorId`
+- `kind`: `new` or `override`
+- `deleted`
+
+The helper does not load masters or identify conflicts.
 
 ## Deserialize
 
