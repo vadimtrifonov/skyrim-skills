@@ -1,0 +1,5 @@
+[tools."http:champollion"]
+version = "1.3.2"
+url = "https://github.com/Orvid/Champollion/releases/download/v1.3.2/Champollion.v1.3.2.zip"
+checksum = "sha256:ea53054276ac8006ccd3b323286bfbc6e34a454fa419d08da9bd440cbd31b383"
+bin_path = "."
