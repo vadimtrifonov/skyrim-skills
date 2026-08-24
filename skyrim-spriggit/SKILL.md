@@ -1,6 +1,6 @@
 ---
 name: skyrim-spriggit
-description: Serialize Skyrim plugins (ESP/ESL/ESM) to editable Spriggit JSON trees, rebuild plugins from those trees, or list all major records in a tree as normalized JSONL.
+description: Serialize Skyrim plugins (ESP/ESL/ESM) to editable Spriggit JSON trees and rebuild plugins from those trees. Use to list all major records as normalized JSONL or retrieve one complete record by FormKey.
 ---
 
 # Skyrim Spriggit
@@ -39,6 +39,14 @@ Each line contains these fields:
 - `deleted`
 
 The helper does not load masters or identify conflicts.
+
+## Get record
+
+```bash
+mise exec -- python scripts/get_record.py "<ModName>.spriggit" "<FormKey>"
+```
+
+The output contains the source file, the path inside that file, and the complete record object. The lookup matches a record's own `FormKey`, not references to that FormKey.
 
 ## Deserialize
 
