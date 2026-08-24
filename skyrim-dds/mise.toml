@@ -1,0 +1,13 @@
+[tool_alias]
+texdiag = "github:microsoft/DirectXTex"
+texconv = "github:microsoft/DirectXTex"
+
+[tools.texdiag]
+version = "may2026"
+asset_pattern = "texdiag.exe"
+bin = "texdiag.exe"
+
+[tools.texconv]
+version = "may2026"
+asset_pattern = "texconv.exe"
+bin = "texconv.exe"
