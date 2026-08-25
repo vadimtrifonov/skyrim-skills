@@ -41,8 +41,7 @@ DDS does not record the Skyrim-specific purpose of the alpha channel.
 
 ## Compare DDS files for the same game path
 
-Run `info` and `analyze` for each physical DDS file.
-Compare these reported properties:
+`info` and `analyze` expose related properties that MSE and PSNR do not describe:
 
 - Dimensions
 - Mip count
@@ -52,5 +51,40 @@ Compare these reported properties:
 - Decoded channel ranges
 - `pixel size`.
 
-PNG previews show the decoded top mip as 8-bit display data.
-For cubemaps and arrays, a PNG preview shows only the first face or item.
+`compare` measures decoded pixel error rather than complete DDS equivalence.
+A zero decoded error does not prove that headers, formats, mip layouts, or compressed blocks match.
+
+### MSE and PSNR
+
+The first MSE value is the sum of the four values in parentheses.
+The parenthesized values are the red, green, blue, and alpha MSE values.
+PSNR uses the red, green, and blue MSE values. It excludes alpha.
+A larger MSE indicates more average squared error.
+A larger PSNR indicates a closer RGB match.
+
+DirectXTex linearizes RGB values from formats marked `_SRGB` before it calculates MSE.
+The MSE values describe decoded floating-point channels, not compressed bytes.
+`compare` prints six decimal places. A displayed `0.000000` can hide a smaller nonzero MSE.
+An infinite PSNR means that the calculated RGB error is zero. Alpha can still differ.
+
+A successful command can report nonzero error.
+Exit code 0 means that DirectXTex calculated the metrics, not that the images match.
+
+### Subresources
+
+If depth, array size, mip count, and image count match, `compare` reports each stored subresource.
+For multiple subresources, it also reports the minimum, average, and maximum metrics.
+For 1D, 2D, array, and cubemap textures, `[item,mip]` identifies each result.
+For 3D textures, `[mip,slice]` identifies each result.
+
+If one of these values differs, `compare` uses only item 0, mip 0, and slice 0.
+It prints a warning when it ignores additional subresources.
+
+### Difference images
+
+`diff` processes only item 0, mip 0, and slice 0.
+It warns when it ignores additional subresources.
+It writes absolute RGB differences and makes the output alpha opaque.
+Thus, the output does not show alpha-channel differences.
+
+An opaque `aaa1` PNG preview maps alpha into RGB and makes those differences visible to `diff`.

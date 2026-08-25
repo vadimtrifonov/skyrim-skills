@@ -1,6 +1,6 @@
 ---
 name: skyrim-dds
-description: Inspect and preview Skyrim DDS textures with DirectXTex. Use for metadata, decoded channel and alpha analysis, or PNG previews.
+description: Inspect, compare, and preview Skyrim DDS textures with DirectXTex. Use for metadata, decoded channel and alpha analysis, MSE and PSNR comparison, difference images, and PNG previews.
 ---
 
 # Skyrim DDS
@@ -43,6 +43,24 @@ mise exec -- texdiag.exe analyze -nologo "<texture.dds>"
 `Variance` is an unnormalized sum of squared deviations; `Std Dev` is its square root. Population variance is `Variance / pixel count`.
 The fourth component of each channel tuple is decoded alpha. DDS does not encode its Skyrim shader meaning.
 
+## DDS comparison
+
+`compare` reports mean-squared error (MSE) for the decoded RGBA channels.
+It also reports peak signal-to-noise ratio (PSNR) for RGB.
+
+```bash
+mise exec -- texdiag.exe compare -nologo "<first.dds>" "<second.dds>"
+```
+
+`diff` creates an image of the absolute RGB differences.
+
+```bash
+mise exec -- texdiag.exe diff -nologo -o "<difference.png>" "<first.dds>" "<second.dds>"
+```
+
+Both commands require equal top-level width and height.
+Without `-y`, `diff` does not replace an existing output file.
+
 ## PNG preview
 
 `texconv` decodes the top mip at its stored dimensions to PNG without modifying the DDS.
@@ -62,4 +80,4 @@ PNG represents only the first face or item of a cubemap or array. It is an 8-bit
 
 ## Reference
 
-- [Diagnostics](references/diagnostics.md) — Mip-chain completeness, stored image data, decoded alpha variation, and same-path file comparison.
+- [Diagnostics](references/diagnostics.md) — Mip-chain completeness, stored image data, alpha interpretation, MSE and PSNR, and difference images.
