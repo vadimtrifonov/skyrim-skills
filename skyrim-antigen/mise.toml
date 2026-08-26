@@ -1,0 +1,12 @@
+[tools]
+dotnet = "9"
+
+[bootstrap.repos]
+"tools/Antigen" = { url = "https://github.com/Mutagen-Modding/Antigen.git", ref = "dev" }
+
+[tasks.setup]
+description = "Update Antigen and publish its CLI"
+run = [
+  "mise bootstrap repos update --yes",
+  'dotnet publish "tools/Antigen/Mutagen.Bethesda.Analyzers.Cli/Mutagen.Bethesda.Analyzers.Cli.csproj" -c Release -o "tools/cli" /p:GeneratePackageOnBuild=false',
+]

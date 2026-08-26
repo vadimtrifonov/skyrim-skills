@@ -21,8 +21,8 @@ Antigen reports known record and load-order problems as `Suggestion`, `Warning`,
 ## Setup
 
 ```powershell
-git clone --depth 1 https://github.com/Mutagen-Modding/Antigen.git tools/Antigen
-dotnet publish tools/Antigen/Mutagen.Bethesda.Analyzers.Cli/Mutagen.Bethesda.Analyzers.Cli.csproj -c Release -o tools/cli /p:GeneratePackageOnBuild=false
+mise trust mise.toml
+mise run setup
 ```
 
 ## MO2 profile scan
