@@ -1,6 +1,6 @@
 ---
 name: skyrim-record-chain
-description: Query active Skyrim record-definition chains by FormKey from a supplied SE/AE or VR load order, including MO2-virtualized Data folders.
+description: Query active Skyrim record-definition chains by FormKey from a SE/AE or VR load order, including MO2 profiles.
 ---
 
 # Skyrim Record Chain
