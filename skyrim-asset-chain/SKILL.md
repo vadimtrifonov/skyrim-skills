@@ -49,9 +49,10 @@ It also applies conventional Root Builder `Root` mappings and MO2 skip rules.
 
 ## Output
 
-The command writes one compact JSON object per provider. For batch input, asset chains follow input order and remain contiguous.
+The command writes one compact JSON object for each matching loose file or BSA member.
+For batch input, rows follow input order and remain contiguous for each asset path.
 Archive rows follow archive-load order. Loose-file rows follow weak-to-strong MO2 priority.
-Use `winner` to identify the runtime-selected provider instead of inferring it from row position.
+Use `winner` to identify the copy that the game uses instead of inferring it from row position.
 
 Each row contains:
 
@@ -71,6 +72,9 @@ Each row contains:
 
 The output can include several physical copies of one registered BSA. Only the copy selected by MO2 can win.
 A successful chain can contain no winner when all matching BSA copies are shadowed.
+
+A requested path with no matching loose file or BSA member produces no row.
+A request with no matches succeeds with empty standard output.
 
 Diagnostics use standard error. An error returns a nonzero exit code and leaves standard output empty, including for batch input.
 Capture standard error separately. Include relevant diagnostics in the report because missing registered archives can produce warnings.
