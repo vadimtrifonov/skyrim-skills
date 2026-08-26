@@ -1,6 +1,6 @@
 ---
 name: skyrim-spriggit
-description: Serialize Skyrim plugins (ESP/ESL/ESM) to editable Spriggit JSON trees and rebuild plugins from those trees. Use to list all major records as normalized JSONL or retrieve one complete record by FormKey.
+description: Serialize or rebuild Skyrim plugins with Spriggit. Use to list major records, retrieve complete records by FormKey, or compare override definitions that share a FormKey.
 ---
 
 # Skyrim Spriggit
@@ -16,7 +16,7 @@ mise install
 
 ## Serialize
 
-Use a clean, dedicated output directory; `<ModName>.spriggit` is the preferred name.
+Use a clean, dedicated output directory. Use `<ModName>.spriggit` as the directory name.
 
 ```bash
 mise exec -- Spriggit.CLI.exe serialize --InputPath "<plugin.esp>" --OutputPath "<ModName>.spriggit" --GameRelease <SkyrimSE|SkyrimVR> --PackageName Spriggit.Json --PackageVersion <version>
@@ -40,13 +40,26 @@ Each line contains these fields:
 
 The helper does not load masters or identify conflicts.
 
-## Get record
+## Get records
+
+Get one record:
 
 ```bash
 mise exec -- python scripts/get_record.py "<ModName>.spriggit" "<FormKey>"
 ```
 
-The output contains the source file, the path inside that file, and the complete record object. The lookup matches a record's own `FormKey`, not references to that FormKey.
+Get many records:
+
+```bash
+mise exec -- python scripts/get_record.py "<ModName>.spriggit" --formkeys-from "<path|->"
+```
+
+Batch input contains one FormKey per line. `-` reads standard input.
+
+Batch mode preserves input order and emits JSONL.
+If an input or lookup error occurs, batch mode produces no output.
+
+Each result contains the source file, its internal path, and the complete record object. Lookup matches the object's own `FormKey`, not references.
 
 ## Deserialize
 
@@ -55,3 +68,7 @@ Package and game metadata are read from the serialized tree.
 ```bash
 mise exec -- Spriggit.CLI.exe deserialize --InputPath "<ModName>.spriggit" --OutputPath "<plugin.esp>"
 ```
+
+## References
+
+- [Record Comparison](references/record-comparison.md) - Compare override definitions with one FormKey.
