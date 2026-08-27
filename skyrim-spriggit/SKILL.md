@@ -22,6 +22,11 @@ Use a clean, dedicated output directory. Use `<ModName>.spriggit` as the directo
 mise exec -- Spriggit.CLI.exe serialize --InputPath "<plugin.esp>" --OutputPath "<ModName>.spriggit" --GameRelease <SkyrimSE|SkyrimVR> --PackageName Spriggit.Json --PackageVersion <version>
 ```
 
+Spriggit stores translation-package executables under `%TEMP%\Spriggit`.
+An incomplete cache can cause a missing `Spriggit.Json.Skyrim.exe` error.
+If the missing executable path is under `%TEMP%\Spriggit`, remove the cache.
+Spriggit restores the translation package during the next serialization.
+
 ## List records
 
 ```bash
