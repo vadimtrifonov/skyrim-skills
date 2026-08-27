@@ -36,5 +36,21 @@ PAS is a human-readable rendering of the PEX structure and instructions. `--asm`
 mise exec -- Champollion.exe "<script.pex>" --psc "<psc-output-directory>" --asm "<pas-output-directory>"
 ```
 
+## Directories
+
+Pass a directory as the input. 
+Add `--recursive` to include PEX files in subdirectories. 
+Add `--threaded` to process files in parallel.
+
+```bash
+mise exec -- Champollion.exe "<pex-input-directory>" --recursive --threaded --psc "<psc-output-directory>" --asm "<pas-output-directory>"
+```
+
+## Interpretation
+
+Use reconstructed PSC to locate the properties, functions, events, and control flow that answer the current question.
+Use PAS when exact instructions or native calls affect the conclusion.
+A whole-file PSC text diff does not establish semantic equivalence.
+
 Champollion derives output filenames from the PEX filename and overwrites existing same-name files.
 Some parse failures return exit code `0` despite error text in stdout or stderr and no output file.
