@@ -14,8 +14,6 @@ mise trust mise.toml
 mise install python github:SARDONYX-sard/serde-hkx github:BadDogSkyrim/PyNifly
 ```
 
-Run commands through `mise exec --`.
-
 ## HKX to XML
 
 ```bash

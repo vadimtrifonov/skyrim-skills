@@ -14,8 +14,6 @@ mise trust mise.toml
 mise install
 ```
 
-Run commands through `mise exec --`.
-
 ## Structured report
 
 Use the read-only PyNifly inspector for semantic analysis of a loose NIF.
