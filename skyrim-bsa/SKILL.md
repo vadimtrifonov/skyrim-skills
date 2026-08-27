@@ -1,9 +1,9 @@
 ---
 name: skyrim-bsa
-description: Inspect metadata, list contents, and extract BSA archives with BSArch64; also supports BA2 archives.
+description: Inspect metadata, list files, and extract BSA and BA2 archives with BSArch64.
 ---
 
-# Skyrim BSA Archives
+# BSA and BA2 Archives
 
 Use this skill directory as the working directory.
 
@@ -11,35 +11,47 @@ Use this skill directory as the working directory.
 
 ```bash
 mise trust mise.toml
-mise install http:bsarch
+mise install
 ```
-
-Run BSArch through `mise exec --`.
 
 ## Inspect
 
-Show archive metadata before extracting:
+Show the archive metadata:
 
 ```bash
-mise exec -- BSArch64.exe "<archive.bsa>"
+mise exec -- BSArch64.exe "<archive>"
 ```
 
-List paths or produce an extended dump:
+Show the metadata and details for each file:
 
 ```bash
-mise exec -- BSArch64.exe "<archive.bsa>" -list
-mise exec -- BSArch64.exe "<archive.bsa>" -dump
+mise exec -- BSArch64.exe "<archive>" -dump
 ```
+
+## List files
+
+Print one file path per line:
+
+```bash
+mise exec -- python scripts/list_paths.py "<archive>"
+```
+
+The script keeps the path order and capitalization that BSArch reports.
+It changes backslashes to forward slashes.
+
+The script returns an error if the number of file paths differs from the `Files:` count.
 
 ## Extract
 
-Treat the archive as read-only. Use a new, empty destination outside the game `Data` directory and installed MO2 mods unless the user explicitly requests otherwise.
+Treat the input archive as read-only.
+If the user does not specify a destination, use a new, empty directory in `%TEMP%`.
 
-BSArch requires the destination directory to exist:
+BSArch requires an existing destination directory:
 
 ```bash
 mkdir -p "<empty-output-directory>"
-mise exec -- BSArch64.exe unpack "<archive.bsa>" "<empty-output-directory>" -mt
+mise exec -- BSArch64.exe unpack "<archive>" "<empty-output-directory>" -mt
 ```
 
-Assume matching files in an existing destination can be overwritten. Never omit the destination argument, because BSArch otherwise extracts beside the input archive.
+BSArch can overwrite files with matching paths in an existing destination.
+Always give the destination argument. Without it, BSArch extracts files beside the input archive.

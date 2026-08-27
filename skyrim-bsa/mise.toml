@@ -1,3 +1,6 @@
+[tools]
+python = "3.12.14"
+
 [tools."http:bsarch"]
 version = "4.1.5f"
 url = "https://github.com/TES5Edit/TES5Edit/releases/download/xedit-4.1.5f/xEdit.4.1.5f.7z"
