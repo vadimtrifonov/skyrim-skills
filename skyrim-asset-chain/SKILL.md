@@ -49,7 +49,8 @@ It also applies conventional Root Builder `Root` mappings and MO2 skip rules.
 
 ## Output
 
-The command writes one compact JSON object for each matching loose file or BSA member.
+The command writes compact JSONL to standard output.
+Each row represents one matching loose file or BSA member.
 For batch input, rows follow input order and remain contiguous for each asset path.
 Archive rows follow archive-load order. Loose-file rows follow weak-to-strong MO2 priority.
 Use `winner` to identify the copy that the game uses instead of inferring it from row position.
@@ -62,7 +63,8 @@ Each row contains:
 - Plugin association: `associatedPlugin`, `pluginLoadOrderIndex`
 - Runtime result: `winner`
 
-`sourceKind` is `loose` or `archive`. `sourceOrigin` identifies game `Data`, an enabled mod, or `Overwrite`.
+`sourceKind` is `loose` or `archive`.
+`sourceOrigin` identifies game `Data`, an enabled mod, or `Overwrite`.
 
 `archiveLoadMechanism` has these values:
 

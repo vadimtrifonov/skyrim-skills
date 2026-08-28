@@ -1,6 +1,6 @@
 ---
 name: skyrim-record-chain
-description: Query active Skyrim record-definition chains by FormKey from a SE/AE or VR load order, including MO2 profiles.
+description: Query active Skyrim record-definition chains by FormKey in SE/AE or VR MO2 profiles.
 ---
 
 # Skyrim Record Chain
@@ -16,69 +16,42 @@ mise install
 
 ## Query inputs
 
-Each query supplies an explicit game, Data folder, `plugins.txt`, and FormKey input.
+Each query supplies an explicit game, MO2 root, profile, and FormKey input.
 
 `--game` accepts `SkyrimSE` or `SkyrimVR`. `SkyrimSE` covers Special Edition and Anniversary Edition.
+`--mo2-root` identifies the instance directory that contains `ModOrganizer.ini`.
+`--profile` identifies a profile by name, not by directory path.
+
 FormKeys use the form `03372B:Skyrim.esm`.
 
-`<FormKey-input>` in the command templates means exactly one of:
+`<FormKey-input>` in the command template means exactly one of:
 
 - `"<FormKey>"`
 - `--formkeys-from "<path|->"` for one FormKey per line
 
 `-` reads the CLI process's standard input. Empty, invalid, and duplicate batch entries are errors.
 
-The resolved active order combines Skyrim's implicit plugins, installed entries from `Skyrim.ccc` beside the Data folder, and enabled non-ghosted entries from `plugins.txt`.
-A missing active plugin or required master is an error.
+## Run context
 
-## MO2 query
-
-MO2 exposes the selected profile's virtualized Data view to processes that it launches and their descendants.
-
-`ModOrganizer.exe run` returns only MO2's completion status. A command wrapper writes the CLI JSONL, diagnostics, and exit code to files:
-
-```batch
-@echo off
-cd /d "<skill-directory>"
-
-mise exec -- skyrim-record-chain.exe ^
-  --game <SkyrimSE|SkyrimVR> ^
-  --data-folder "<game Data>" ^
-  --load-order "<MO2>\profiles\<profile>\plugins.txt" ^
-  <FormKey-input> > "<chain.jsonl>" 2> "<chain.err>"
-
-set "code=%ERRORLEVEL%"
-> "<chain.exit>" echo %code%
-exit /b %code%
-```
-
-Launch the wrapper under the selected profile:
-
-```powershell
-& "<MO2>\ModOrganizer.exe" `
-  -p "<profile>" run `
-  -a '/d /c ""<runner.cmd>""' `
-  -c "<runner-directory>" `
-  "$env:ComSpec"
-```
-
-`chain.exit` is written last and contains the CLI exit code.
-
-## Physical Data query
-
-When all active plugin files are visible without MO2, run the CLI directly:
+Run the command directly, outside MO2.
 
 ```powershell
 mise exec -- skyrim-record-chain.exe `
   --game <SkyrimSE|SkyrimVR> `
-  --data-folder "<Data>" `
-  --load-order "<plugins.txt>" `
+  --mo2-root "<MO2 root>" `
+  --profile "<profile>" `
   <FormKey-input>
 ```
 
+The tool builds the active order from implicit plugins and enabled, non-ghosted profile entries.
+For Skyrim SE, it also reads installed entries from the physical `Skyrim.ccc` file.
+For each plugin, it selects the first file from `Overwrite`, enabled mods from strongest to weakest, then game `Data`.
+
 ## Output
 
-The command writes one compact JSON object per line. For batch input, FormKeys follow input order and each chain is contiguous.
+The command writes compact JSONL to standard output.
+Each row represents one active plugin definition.
+For batch input, rows follow input order and remain contiguous for each FormKey.
 Rows in each chain follow active load order from origin to winner.
 
 Each row contains:
@@ -88,16 +61,18 @@ Each row contains:
 - Header state: `majorRecordFlagsRaw`, `deleted`, `partial`
 - Chain position: `origin`, `winner`
 
-Field semantics:
-
-- `loadOrderIndex` is zero-based in the resolved active order
-- `majorRecordFlagsRaw` is an unsigned 32-bit value that contains all record-header flags
-- `origin` marks the first resolved definition, whose provider can differ from the FormKey's ModKey for an injected record
-- `winner` marks the final definition
-- `partial` decodes the Partial Form bit for cells, dialog topics, and worldspaces
-
-Under MO2, `pluginPath` refers to the virtual Data path used by that profile.
+`majorRecordFlagsRaw` is the raw unsigned 32-bit record-header flag mask.
+`origin` marks the first resolved definition. Its provider can differ from the ModKey in `formKey` for an injected record.
+`partial` decodes the Partial Form bit for cells, dialog topics, and worldspaces.
 
 Deleted and partial definitions remain in the chain.
 
-Diagnostics use standard error. An error returns a nonzero exit code and leaves standard output empty, including for a partly valid batch.
+A requested FormKey with no active definition produces no row.
+A request with no matches succeeds with empty standard output.
+
+Diagnostics use standard error. An error returns a nonzero exit code and leaves standard output empty, including for batch input.
+
+## Limits
+
+Worldspaces, cells, and dialog topics can combine child records from several plugins.
+To inspect a child, query its FormKey separately.
