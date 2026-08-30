@@ -1,0 +1,22 @@
+[tools]
+dotnet = "10"
+python = "3.12.14"
+
+[bootstrap.repos]
+"tools/Mutagen" = { url = "https://github.com/Mutagen-Modding/Mutagen.git", ref = "dev" }
+
+[env]
+MUTAGEN_ROOT = "{{ config_root }}/tools/Mutagen"
+
+[tasks.setup]
+description = "Install or update the current Mutagen source"
+run = "mise bootstrap repos update --yes"
+
+[tasks.new]
+description = "Create a temporary Mutagen scratch project"
+run = "python scripts/new_scratch.py"
+
+[tasks.test]
+description = "Run the scratch scaffold tests"
+env = { PYTHONDONTWRITEBYTECODE = "1" }
+run = "python -m unittest discover -s tests -v"
