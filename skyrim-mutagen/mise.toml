@@ -12,11 +12,12 @@ MUTAGEN_ROOT = "{{ config_root }}/tools/Mutagen"
 description = "Install or update the current Mutagen source"
 run = "mise bootstrap repos update --yes"
 
-[tasks.new]
-description = "Create a temporary Mutagen scratch project"
-run = "python scripts/new_scratch.py"
-
 [tasks.test]
-description = "Run the scratch scaffold tests"
+description = "Run the scratch scaffold unit tests"
 env = { PYTHONDONTWRITEBYTECODE = "1" }
+run = "python -m unittest discover -s tests -v"
+
+[tasks.check]
+description = "Run tests and exercise generated scratch workflows"
+env = { PYTHONDONTWRITEBYTECODE = "1", SKYRIM_MUTAGEN_INTEGRATION = "1" }
 run = "python -m unittest discover -s tests -v"
