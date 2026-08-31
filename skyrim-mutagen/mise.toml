@@ -1,6 +1,5 @@
 [tools]
 dotnet = "10"
-python = "3.12.14"
 
 [bootstrap.repos]
 "tools/Mutagen" = { url = "https://github.com/Mutagen-Modding/Mutagen.git", ref = "dev" }
@@ -12,12 +11,17 @@ MUTAGEN_ROOT = "{{ config_root }}/tools/Mutagen"
 description = "Install or update the current Mutagen source"
 run = "mise bootstrap repos update --yes"
 
+[tasks.scratch]
+description = "Create a temporary scratch project"
+quiet = true
+raw_args = true
+run = "pwsh -NoProfile -File scripts/New-Scratch.ps1"
+
 [tasks.test]
-description = "Run the scratch scaffold unit tests"
-env = { PYTHONDONTWRITEBYTECODE = "1" }
-run = "python -m unittest discover -s tests -v"
+description = "Test the scratch scaffold"
+run = "pwsh -NoProfile -File tests/Test-ScratchProject.ps1"
 
 [tasks.check]
 description = "Run tests and exercise generated scratch workflows"
-env = { PYTHONDONTWRITEBYTECODE = "1", SKYRIM_MUTAGEN_INTEGRATION = "1" }
-run = "python -m unittest discover -s tests -v"
+timeout = "10m"
+run = "pwsh -NoProfile -File tests/Test-ScratchProject.ps1 -Integration"

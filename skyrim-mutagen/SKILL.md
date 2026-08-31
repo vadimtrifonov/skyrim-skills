@@ -21,7 +21,7 @@ Mise exposes that checkout as `MUTAGEN_ROOT`.
 ## Create a scratch project
 
 ```powershell
-$work = (mise exec -- python scripts/new_scratch.py "<task-name>").Trim()
+$work = (mise run scratch "<task-name>").Trim()
 ```
 
 The command prints the path of a new directory under `%TEMP%`.
