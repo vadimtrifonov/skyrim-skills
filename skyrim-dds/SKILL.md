@@ -12,7 +12,8 @@ mise trust mise.toml
 mise install
 ```
 
-At the legacy Windows path limit, ordinary paths can fail as not found. Both tools accept `\\?\C:\...` extended-length paths.
+At the legacy Windows path limit, ordinary paths can fail as not found.
+Both tools accept `\\?\C:\...` extended-length paths.
 
 ## Metadata
 
@@ -40,8 +41,10 @@ Legacy FourCC formats are normalized to DXGI names, such as DXT1 to `BC1_UNORM` 
 mise exec -- texdiag.exe analyze -nologo "<texture.dds>"
 ```
 
-`Variance` is an unnormalized sum of squared deviations; `Std Dev` is its square root. Population variance is `Variance / pixel count`.
-The fourth component of each channel tuple is decoded alpha. DDS does not encode its Skyrim shader meaning.
+`Variance` is an unnormalized sum of squared deviations; `Std Dev` is its square root.
+Population variance is `Variance / pixel count`.
+The fourth component of each channel tuple is decoded alpha.
+DDS does not encode its Skyrim shader meaning.
 
 ## DDS comparison
 
@@ -64,7 +67,8 @@ Without `-y`, `diff` does not replace an existing output file.
 ## PNG preview
 
 `texconv` decodes the top mip at its stored dimensions to PNG without modifying the DDS.
-The output directory must exist. Without `-y`, an existing output file is not replaced.
+The output directory must exist.
+Without `-y`, an existing output file is not replaced.
 
 ```bash
 mise exec -- texconv.exe -nologo -ft png -m 1 -o "<output-directory>" "<texture.dds>"
@@ -76,7 +80,8 @@ mise exec -- texconv.exe -nologo -ft png -m 1 -o "<output-directory>" "<texture.
 mise exec -- texconv.exe -nologo -ft png -m 1 --swizzle aaa1 -sx _alpha -o "<output-directory>" "<texture.dds>"
 ```
 
-PNG represents only the first face or item of a cubemap or array. It is an 8-bit display view rather than a lossless representation of floating-point or HDR data.
+PNG represents only the first face or item of a cubemap or array.
+It is an 8-bit display view rather than a lossless representation of floating-point or HDR data.
 
 ## Reference
 

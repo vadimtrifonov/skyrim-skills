@@ -35,7 +35,8 @@ mise exec -- python scripts/inspect_nif.py "<input.nif>" --geometry --bones --no
 - `--bones` includes bone names rather than counts only.
 - `--nodes` includes the scene-node hierarchy.
 - `--blocks` includes the ordered NIF block list.
-- `--data-root "<Data>"` checks whether referenced textures and other assets exist as loose files under a supplied game or mod Data directory. It does not search BSAs.
+- `--data-root "<Data>"` checks whether referenced textures and other assets exist as loose files under a supplied game or mod Data directory.
+  It does not search BSAs.
 
 Inspect both `_0.nif` and `_1.nif` members of a weight-slider pair when relevant.
 
@@ -49,9 +50,13 @@ mise exec -- nif_info.exe -m "<Data-directory>" "meshes/path/model.nif" > "<mate
 mise exec -- nif_info.exe -v "<Data-directory>" "meshes/path/model.nif" > "<verbose.txt>"
 ```
 
-Use lowercase, full asset paths with direct `nif_info` calls. Its filters are case-sensitive substring matches after paths are normalized to lowercase, so a short pattern can select multiple files. Prefer `scripts/render_nif.py` for deterministic preview selection because it requires exactly one exact match.
+Use lowercase, full asset paths with direct `nif_info` calls.
+Its filters are case-sensitive substring matches after paths are normalized to lowercase, so a short pattern can select multiple files.
+Prefer `scripts/render_nif.py` for deterministic preview selection because it requires exactly one exact match.
 
-Pass the containing Data directory rather than one BSA when textures may live in other archives. FO76Utils only sees the physical directory or archive supplied to it. Its flattened directory view does not reproduce plugin/BSA load order or MO2 priority, and the report cannot identify which archive supplied a winning path; use the actual game-visible Data view or inspect candidate archives separately when conflicts matter.
+Pass the containing Data directory rather than one BSA when textures may live in other archives.
+FO76Utils only sees the physical directory or archive supplied to it.
+Its flattened directory view does not reproduce plugin/BSA load order or MO2 priority, and the report cannot identify which archive supplied a winning path; use the actual game-visible Data view or inspect candidate archives separately when conflicts matter.
 
 ## Headless PNG preview
 
@@ -66,9 +71,11 @@ mise exec -- python scripts/render_nif.py \
   --report "<new-output-directory>/longsword.json"
 ```
 
-The asset must resolve to exactly one NIF. Write outputs outside the source/Data directory; existing outputs require `--force`.
+The asset must resolve to exactly one NIF.
+Write outputs outside the source/Data directory; existing outputs require `--force`.
 Exit code `3` means the render has no non-zero-alpha pixels, not that its artifacts were lost: the PNG and JSON report are preserved.
-If `--report` is omitted, the JSON report is written to stdout. Add `--keep-dds` only when the original DDS is useful.
+If `--report` is omitted, the JSON report is written to stdout.
+Add `--keep-dds` only when the original DDS is useful.
 
 Useful camera directions are:
 
@@ -77,7 +84,8 @@ Useful camera directions are:
 - `5` to `8`: south, east, north, and west;
 - `10` to `13`: isometric from N, W, S, and E.
 
-Generate several views when orientation or occlusion matters. Keep dimensions, direction, scale, rotation, lighting, and debug mode identical for before/after comparisons.
+Generate several views when orientation or occlusion matters.
+Keep dimensions, direction, scale, rotation, lighting, and debug mode identical for before/after comparisons.
 
 Diagnostic render modes:
 

@@ -68,4 +68,5 @@ These cases can cause a compiler error or different property-access code.
 
 Caprica writes the source path, user name, computer name, and compilation time into the PEX header.
 Builds made at different times or from different source paths have different file hashes.
-The `--anonymize` option has no effect. These fields remain populated.
+The `--anonymize` option has no effect.
+These fields remain populated.

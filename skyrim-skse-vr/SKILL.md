@@ -119,8 +119,7 @@ The [analyze documentation](https://github.com/alandtse/vr_address_tools#analyze
 
 A Steam `SkyrimVR.exe` with a `.bind` stub may not expose the executed code at the expected disk RVAs.
 Use an unpacked image for offline analysis or inspect the launched process.
-[Runtime Byte Inspector](https://github.com/vadimtrifonov/runtime-byte-inspector/blob/master/SKILL.md) can be used to capture bounded live-memory ranges,
-disassemble from an explicit origin, and compare saved before/after captures.
+[Runtime Byte Inspector](https://github.com/vadimtrifonov/runtime-byte-inspector/blob/master/SKILL.md) can be used to capture bounded live-memory ranges, disassemble from an explicit origin, and compare saved before/after captures.
 
 Capture original code before installing the hook; another plugin may already have changed the site.
 Across launches, RVAs remain useful under ASLR, but absolute pointers embedded in captured windows can change.

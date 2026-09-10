@@ -30,7 +30,8 @@ Expressions and control flow are inferred from PEX instructions, and Champollion
 mise exec -- Champollion.exe "<script.pex>" --psc "<psc-output-directory>"
 ```
 
-PAS is a human-readable rendering of the PEX structure and instructions. `--asm` also emits PSC, so both output destinations are explicit here:
+PAS is a human-readable rendering of the PEX structure and instructions.
+`--asm` also emits PSC, so both output destinations are explicit here:
 
 ```bash
 mise exec -- Champollion.exe "<script.pex>" --psc "<psc-output-directory>" --asm "<pas-output-directory>"

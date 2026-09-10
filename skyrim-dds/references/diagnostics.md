@@ -16,7 +16,8 @@ For arrays and cubemaps, `mipLevels` gives the count for each item or face.
 - `mipLevels < maximum`: The chain stops before the smallest level.
 - `mipLevels == 1`: The DDS stores only the top level.
 
-These results describe the stored subresources. DDS does not record why a chain stops early.
+These results describe the stored subresources.
+DDS does not record why a chain stops early.
 
 ## Quantify stored image data
 
@@ -58,14 +59,17 @@ A zero decoded error does not prove that headers, formats, mip layouts, or compr
 
 The first MSE value is the sum of the four values in parentheses.
 The parenthesized values are the red, green, blue, and alpha MSE values.
-PSNR uses the red, green, and blue MSE values. It excludes alpha.
+PSNR uses the red, green, and blue MSE values.
+It excludes alpha.
 A larger MSE indicates more average squared error.
 A larger PSNR indicates a closer RGB match.
 
 DirectXTex linearizes RGB values from formats marked `_SRGB` before it calculates MSE.
 The MSE values describe decoded floating-point channels, not compressed bytes.
-`compare` prints six decimal places. A displayed `0.000000` can hide a smaller nonzero MSE.
-An infinite PSNR means that the calculated RGB error is zero. Alpha can still differ.
+`compare` prints six decimal places.
+A displayed `0.000000` can hide a smaller nonzero MSE.
+An infinite PSNR means that the calculated RGB error is zero.
+Alpha can still differ.
 
 A successful command can report nonzero error.
 Exit code 0 means that DirectXTex calculated the metrics, not that the images match.

@@ -27,7 +27,9 @@ mise run setup
 
 ## Targeted MO2 scan
 
-Select the plugins under investigation. Keep the complete profile active and blacklist every other active plugin. Blacklisting suppresses isolated analysis and reports for those plugins without removing them from the contextual load order.
+Select the plugins under investigation.
+Keep the complete profile active and blacklist every other active plugin.
+Blacklisting suppresses isolated analysis and reports for those plugins without removing them from the contextual load order.
 
 Create a temporary run configuration from the profile's active `loadorder.txt`:
 
@@ -84,9 +86,12 @@ $arguments = 'run-analyzers -g {0} -s Error --DataFolder "{1}" --RunConfigPath "
 & (Join-Path $mo2Root "ModOrganizer.exe") -p $profile run -a $arguments -c $work $cli
 ```
 
-Start at `Error`. Expand to `Warning` or `Suggestion` only after reviewing the error set. Add `--PrintTopics` to list enabled topics.
+Start at `Error`.
+Expand to `Warning` or `Suggestion` only after reviewing the error set.
+Add `--PrintTopics` to list enabled topics.
 
-MO2 can return before the analyzer exits. Read `$report` only after `Mutagen.Bethesda.Analyzers.Cli` is no longer running.
+MO2 can return before the analyzer exits.
+Read `$report` only after `Mutagen.Bethesda.Analyzers.Cli` is no longer running.
 
 ## Interpretation boundaries
 
@@ -106,7 +111,8 @@ For findings that name a language, retain the profile's active `sLanguage` unles
 
 ## Broad scan
 
-Run without `--RunConfigPath` only to establish a baseline, summarize topic counts, or investigate one analyzer. Do not present raw broad-scan rows as an actionable load-order report.
+Run without `--RunConfigPath` only to establish a baseline, summarize topic counts, or investigate one analyzer.
+Do not present raw broad-scan rows as an actionable load-order report.
 
 ## Results
 

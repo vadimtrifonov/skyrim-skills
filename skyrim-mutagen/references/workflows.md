@@ -12,7 +12,8 @@ using var mod = SkyrimMod.Create(SkyrimRelease.SkyrimVR)
     .Construct();
 ```
 
-Add `.Mutable()` before `.Construct()` only when modifying the imported plugin. Mutable import parses the complete file.
+Add `.Mutable()` before `.Construct()` only when modifying the imported plugin.
+Mutable import parses the complete file.
 
 ## Read localized strings
 
@@ -27,7 +28,8 @@ using var mod = SkyrimMod.Create(SkyrimRelease.SkyrimVR)
     .Construct();
 ```
 
-`WithStringsFolder` overrides the loose strings directory but does not disable BSA lookup. `WithBsaFolder` overrides the directory searched for applicable BSAs.
+`WithStringsFolder` overrides the loose strings directory but does not disable BSA lookup.
+`WithBsaFolder` overrides the directory searched for applicable BSAs.
 
 For an MO2 profile, resolve the plugin, loose string files, and applicable archives according to profile priority; they can have different providers.
 
@@ -40,7 +42,8 @@ var modKey = ModKey.FromFileName("Skyrim.esm");
 var formKey = FormKey.Factory("03372B:Skyrim.esm");
 ```
 
-A FormKey contains the originating ModKey and local FormID. It does not contain a runtime load-order index.
+A FormKey contains the originating ModKey and local FormID.
+It does not contain a runtime load-order index.
 
 ## Build and query a link cache
 
@@ -67,7 +70,8 @@ using var loadOrder = new LoadOrder<ModListing<ISkyrimModGetter>>(listings);
 var linkCache = loadOrder.ToImmutableLinkCache();
 ```
 
-Here, `orderedProviders` is a sequence of `ModPath` values. Disposing the load order disposes its plugin overlays.
+Here, `orderedProviders` is a sequence of `ModPath` values.
+Disposing the load order disposes its plugin overlays.
 
 - `TryResolve` reports an unresolved optional link without throwing.
 - `Resolve` throws when the record is absent.
@@ -78,7 +82,8 @@ Use a mutable link cache when adding or removing records from an output mod incl
 
 ## Create records and overrides
 
-Polymorphic groups require a concrete record variant. For example, create a Skyrim GLOB with `AddNewShort`, `AddNewFloat`, or `AddNewInt`; equal displayed values can have different binary types.
+Polymorphic groups require a concrete record variant.
+For example, create a Skyrim GLOB with `AddNewShort`, `AddNewFloat`, or `AddNewInt`; equal displayed values can have different binary types.
 
 ```csharp
 using Mutagen.Bethesda;
@@ -93,7 +98,8 @@ var patchedNpc = output.Npcs.GetOrAddAsOverride(sourceNpc);
 patchedNpc.Name = "New Name";
 ```
 
-`GetOrAddAsOverride` preserves the source FormKey. Duplication creates a new FormKey instead.
+`GetOrAddAsOverride` preserves the source FormKey.
+Duplication creates a new FormKey instead.
 
 ## Write a plugin
 
@@ -119,7 +125,8 @@ await output.BeginWrite
 
 ## Check written plugins
 
-Checks against the in-memory output do not exercise binary serialization. Reopen the written plugin before checking it:
+Checks against the in-memory output do not exercise binary serialization.
+Reopen the written plugin before checking it:
 
 ```csharp
 using var written = SkyrimMod.Create(release)
@@ -131,6 +138,9 @@ For localized output, also provide its strings folder and target language before
 
 ## Compare records
 
-Mutagen documents generated equality and translation masks as work in progress. Generated traversal can be incomplete for nested records.
+Mutagen documents generated equality and translation masks as work in progress.
+Generated traversal can be incomplete for nested records.
 
-Do not use `Equals`, `GetEqualsMask`, or a `TranslationMask` as a generic compatibility test. Compare the required fields directly. If generated equality is required, inspect its implementation for the exact record type.
+Do not use `Equals`, `GetEqualsMask`, or a `TranslationMask` as a generic compatibility test.
+Compare the required fields directly.
+If generated equality is required, inspect its implementation for the exact record type.

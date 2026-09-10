@@ -16,7 +16,8 @@ mise install
 
 ## Serialize
 
-Use a clean, dedicated output directory. Use `<ModName>.spriggit` as the directory name.
+Use a clean, dedicated output directory.
+Use `<ModName>.spriggit` as the directory name.
 
 ```bash
 mise exec -- Spriggit.CLI.exe serialize --InputPath "<plugin.esp>" --OutputPath "<ModName>.spriggit" --GameRelease <SkyrimSE|SkyrimVR> --PackageName Spriggit.Json --PackageVersion <version>
@@ -59,12 +60,14 @@ Get many records:
 mise exec -- python scripts/get_record.py "<ModName>.spriggit" --formkeys-from "<path|->"
 ```
 
-Batch input contains one FormKey per line. `-` reads standard input.
+Batch input contains one FormKey per line.
+`-` reads standard input.
 
 Batch mode preserves input order and emits JSONL.
 If an input or lookup error occurs, batch mode produces no output.
 
-Each result contains the source file, its internal path, and the complete record object. Lookup matches the object's own `FormKey`, not references.
+Each result contains the source file, its internal path, and the complete record object.
+Lookup matches the object's own `FormKey`, not references.
 
 ## Deserialize
 

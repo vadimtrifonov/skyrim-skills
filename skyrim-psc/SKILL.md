@@ -52,8 +52,10 @@ mise exec -- python scripts/compile_psc.py \
 ```
 
 Use the printed import order to confirm that each selected override precedes the source that it replaces.
-The helper emits one PEX for the input PSC. It does not update plugin VMAD data.
-Imported PSC files supply declarations only. Caprica does not copy their function bodies into the output PEX.
+The helper emits one PEX for the input PSC.
+It does not update plugin VMAD data.
+Imported PSC files supply declarations only.
+Caprica does not copy their function bodies into the output PEX.
 
 ## References
 

@@ -54,4 +54,5 @@ mise exec -- BSArch64.exe unpack "<archive>" "<empty-output-directory>" -mt
 ```
 
 BSArch can overwrite files with matching paths in an existing destination.
-Always give the destination argument. Without it, BSArch extracts files beside the input archive.
+Always give the destination argument.
+Without it, BSArch extracts files beside the input archive.
